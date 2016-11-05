@@ -1,0 +1,75 @@
+<!doctype html>
+<head>
+        <meta charset="utf-8">
+        <title>Tak chętnie Ci podam WIDEŁKI CENOWE</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
+        <style>
+                @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+
+                table {
+                        border-collapse: collapse;
+                }
+
+                th, td {
+                        padding: 8px;
+                        text-align: left;
+                        border-bottom: 1px solid #ddd;
+                        text-align: center;
+                }
+
+                th {
+                        background-color: #4CAF50;
+                        color: white;
+                        text-align: center;
+                }
+
+                tr:hover{background-color:#f5f5f5}
+                tr:nth-child(even){background-color: #f2f2f2}
+
+                body {
+                    font-size:16px;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height:1;
+                    font-family: "Roboto Condensed", Arial, sans-serif;
+
+                }
+        </style>
+</head>
+<body>
+<p>
+<a href="http://widelkicenowe.appspot.com/">Home</a> | <a href="https://soundcloud.com/thechujs/wide-ki-cenowe" target="_blank">Tak chętnie podam Ci widełki cenowe</a>
+</p>
+{% if objects %}
+<table>
+        <tr>
+                <th>Data</th>
+                <th>Stanowisko (Project Manager)</th>
+                <th>Min (brutto)</th>
+                <th>Max (brutto)</th>
+        </tr>
+
+    {% for obj in objects %}
+        <tr>
+            <td>{{ obj.view_date }}</td>
+            <td>{{ obj.jobTitle }}</td>
+            <td>{{ obj.minWage }}</td>
+            <td>{{ obj.maxWage }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+        <p>
+            {% if prev %}
+                <a href="/?prev_cursor={{ prev_cursor }}">« Wstecz</a> |
+            {% endif %}
+
+            {% if next %}
+                <a href="/?next_cursor={{ next_cursor }}">Dalej »</a>
+            {% endif %}
+        </p>
+{% else %}
+<p>Brak wpisów w bazie.</p>
+{% endif %}
+</body>
+</html>

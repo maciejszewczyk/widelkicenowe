@@ -1,0 +1,5 @@
+cron:
+- description: Get RSS from nofluffjobs.com
+  url: /update
+  schedule: every 1 hours
+  timezone: Europe/Warsaw
