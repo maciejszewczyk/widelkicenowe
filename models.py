@@ -10,11 +10,14 @@ class Jobs4(ndb.Model):
     jobTitle = ndb.StringProperty()
     minWage = ndb.IntegerProperty()
     maxWage = ndb.IntegerProperty()
+    category = ndb.IntegerProperty()
 
     @classmethod
-    def cursor_pagination(cls, prev_cursor_str, next_cursor_str):
+    def cursor_pagination(cls, prev_cursor_str, next_cursor_str, ctg):
         if not prev_cursor_str and not next_cursor_str:
-            objects, next_cursor, more = cls.query().order(cls.create_date).fetch_page(ITEMS)
+            # q.filter('title =', 'Imagine')
+            # objects, next_cursor, more = cls.query().filter(cls.category == 1).order(-cls.view_date).fetch_page(ITEMS)
+            objects, next_cursor, more = cls.query().order(-cls.view_date).fetch_page(ITEMS)
             prev_cursor_str = ''
             if next_cursor:
                 next_cursor_str = next_cursor.urlsafe()
@@ -24,14 +27,14 @@ class Jobs4(ndb.Model):
             prev = False
         elif next_cursor_str:
             cursor = Cursor(urlsafe=next_cursor_str)
-            objects, next_cursor, more = cls.query().order(cls.create_date).fetch_page(ITEMS, start_cursor=cursor)
+            objects, next_cursor, more = cls.query().order(-cls.view_date).fetch_page(ITEMS, start_cursor=cursor)
             prev_cursor_str = next_cursor_str
             next_cursor_str = next_cursor.urlsafe()
             prev = True
             next_ = True if more else False
         elif prev_cursor_str:
             cursor = Cursor(urlsafe=prev_cursor_str)
-            objects, next_cursor, more = cls.query().order(-cls.create_date).fetch_page(ITEMS, start_cursor=cursor)
+            objects, next_cursor, more = cls.query().order(cls.view_date).fetch_page(ITEMS, start_cursor=cursor)
             objects.reverse()
             next_cursor_str = prev_cursor_str
             prev_cursor_str = next_cursor.urlsafe()
