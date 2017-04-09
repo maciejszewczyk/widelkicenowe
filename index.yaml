@@ -1,0 +1,7 @@
+indexes:
+
+- kind: Jobs4
+  properties:
+  - name: category
+  - name: view_date
+    direction: desc
