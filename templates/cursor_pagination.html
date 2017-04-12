@@ -3,6 +3,12 @@
         <meta charset="utf-8">
         <title>Tak chętnie Ci podam WIDEŁKI CENOWE</title>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
+        <meta property="og:url" content="http://widelkicenowe.appspot.com/" />
+        <meta property="og:title" content="Tak chętnie Ci podam WIDEŁKI CENOWE" />
+        <meta property="og:site_name" content="WIDEŁKI CENOWE" />
+        <meta property="og:description" content="Widełki cenowe. Tylko wynagrodzenie miesięczne, w PLN brutto, umowa o pracę, w Warszawie" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="http://widelkicenowe.appspot.com/og_image.png" />
         <style>
                 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
@@ -35,16 +41,32 @@
 
                 }
         </style>
+
 </head>
 <body>
+
 <p>
-<a href="http://widelkicenowe.appspot.com/">Home</a> | <a href="https://soundcloud.com/thechujs/wide-ki-cenowe" target="_blank">Tak chętnie podam Ci widełki cenowe</a>
+<a href="http://widelkicenowe.appspot.com/">Start</a> | <a href="https://soundcloud.com/thechujs/wide-ki-cenowe" target="_blank">Tak chętnie podam Ci widełki cenowe</a>
 </p>
 {% if objects %}
 <table>
         <tr>
                 <th>Data</th>
-                <th>Stanowisko (Project Manager)</th>
+                <th><form method="get" action="/">
+  <select id="sel" name="category">
+      <option selected disabled>Wybierz</option>
+      <option value="projectManager">Project Manager</option>
+      <option value="businessAnalyst">Business Analyst</option>
+      <option value="businessIntelligence">Business Intelligence</option>
+      <option value="backend">Backend</option>
+      <option value="frontend">Frontend</option>
+      <option value="fullstack">Full Stack</option>
+      <option value="mobile">Mobile</option>
+      <option value="devops">DevOps</option>
+      <option value="testing">Testing</option>
+  </select>
+  <input type="submit" value="Filtruj"/>
+</form></th>
                 <th>Min (brutto)</th>
                 <th>Max (brutto)</th>
         </tr>
@@ -60,16 +82,30 @@
 </table>
 
         <p>
-            {% if prev %}
-                <a href="/?prev_cursor={{ prev_cursor }}">« Wstecz</a> |
+            {% if ((prev) and (ctg)) %}
+                <a href="/?category={{ category }}&prev_cursor={{ prev_cursor }}">« Wstecz</a> |
+            {% else %}
+                {% if prev %}
+                    <a href="/?prev_cursor={{ prev_cursor }}">« Wstecz</a> |
+                {% endif %}
             {% endif %}
 
-            {% if next %}
-                <a href="/?next_cursor={{ next_cursor }}">Dalej »</a>
+
+            {% if ((next) and (ctg)) %}
+                <a href="/?category={{ category }}&next_cursor={{ next_cursor }}">Dalej »</a>
+            {% else %}
+                {% if next %}
+                    <a href="/?next_cursor={{ next_cursor }}">Dalej »</a>
+                {% endif %}
             {% endif %}
         </p>
 {% else %}
 <p>Brak wpisów w bazie.</p>
 {% endif %}
+<script>
+{% if ctg %}
+    document.getElementById('sel').value = "{{ category }}";
+{% endif %}
+</script>
 </body>
 </html>
